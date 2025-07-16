@@ -48,11 +48,8 @@ if st.button("🔍 Predict Sentiment"):
 
         
 
-        sentiment_details = {
-            0: {"label": "🔴 Negative", "color": "#FF4C4C", "gif": "https://media.giphy.com/media/Ty9Sg8oHghPWg/giphy.gif"},
-            1: {"label": "🟡 Neutral", "color": "#FFD700", "gif": "https://media3.giphy.com/media/kaq6GnxDlJaBq/giphy.gif"},
-            2: {"label": "🟢 Positive", "color": "#32CD32", "gif": "https://media4.giphy.com/media/Rznz8HjrKQAOQ/giphy.gif"}
-        }
+        sentiment_map = {0: "🔴 Negative", 1: "🟡 Neutral", 2: "🟢 Positive"}
+        sentiment_label = sentiment_map.get(pred, str(pred))
 
         # Result Card
         st.markdown("---")
