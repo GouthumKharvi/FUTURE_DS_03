@@ -46,8 +46,7 @@ if st.button("🔍 Predict Sentiment"):
         input_vector = vectorizer.transform([user_input])
         pred = model.predict(input_vector)[0]
 
-        sentiment_map = {0: "🔴 Negative", 1: "🟡 Neutral", 2: "🟢 Positive"}
-        sentiment_label = sentiment_map.get(pred, str(pred))
+        
 
         sentiment_details = {
             0: {"label": "🔴 Negative", "color": "#FF4C4C", "gif": "https://media.giphy.com/media/Ty9Sg8oHghPWg/giphy.gif"},
