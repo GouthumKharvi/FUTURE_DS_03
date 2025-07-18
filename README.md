@@ -7,7 +7,7 @@ Absolutely, Goutham! Below is a **very detailed and comprehensive `README.md`** 
 ---
 
 ````markdown
-# 📊 Student Feedback Sentiment Analysis & Event Insights Dashboard 🚀
+# 📊 Student Feedback Sentiment Analysis & Event Insights Dashboard 🚀 
 
 ## 🔍 Project Overview
 
