@@ -2,12 +2,17 @@
 College Event Feedback Analysis – Internship Project(Using NLP + ML + PowerBI)
 
 
-Absolutely, Goutham! Below is a **very detailed and comprehensive `README.md`** in **Markdown** format that covers every component of your project from **Google Colab (Python, NLP, ML)** to **Power BI (DAX, Power Query)** and your **Streamlit Web App** deployment using **Anaconda CLI**. This is designed to be **lengthy, complete, and suitable for GitHub**.
 
 ---
 
 ````markdown
-# 📊 Student Feedback Sentiment Analysis & Event Insights Dashboard 🚀 
+# 📊 Student Feedback Sentiment Analysis & Event Insights Dashboard 🚀
+
+
+
+https://github.com/user-attachments/assets/5cfc866e-b1e6-41c9-9c4b-82b9cb05bb9a
+
+
 
 ## 🔍 Project Overview
 
@@ -447,35 +452,100 @@ in
 
 ## 📌 Summary of Key Insights
 
-* Workshops had the **highest average ratings**.
-* Common issues involved **lack of interaction, time constraints**, and **technical difficulties**.
-* Sentiment analysis showed **65% positive**, **20% neutral**, **15% negative**.
-* Departments with the most-liked events: **CS**, **ECE**, **MBA**.
-* Recommendations are derived from polarity vs rating correlation.
+### 🧑‍🏫 Workshops
+- Workshops consistently received the **highest average ratings** across all feedback metrics:
+  - `Average_Score`
+  - `Compound` (VADER)
+  - `Polarity` (TextBlob)
+  - `Percentage`
 
 ---
 
-## 🧭 Final Deliverables
+### 🔍 Sentiment Analysis (TextBlob & VADER)
+- **Sentiment Breakdown** from `Cleaned_Comments`:
+  - 🟢 **65% Positive**
+  - ⚪ **20% Neutral**
+  - 🔴 **15% Negative**
+- `Compound` scores from VADER aligned well with `Percentage` ratings and `Average_Score`.
 
-✅ Google Colab Notebook with:
+---
 
-* [x] Data Cleaning & Preprocessing
-* [x] TextBlob/VADER NLP analysis
-* [x] EDA & Word Cloud
-* [x] ML Models (Logistic Regression & Random Forest)
-* [x] Model Saving
+### 💡 Text Preprocessing & NLP
+- **Text Normalization** included:
+  - Lowercasing
+  - Removal of punctuation, stopwords, and special characters
+  - Tokenization and Lemmatization
+- **TF-IDF Vectorization**:
+  - Applied to `Cleaned_Comments` for feature extraction.
+  - Used in machine learning model training and sentiment quantification.
 
-✅ Streamlit App:
+---
 
-* [x] Sentiment Classification based on text input
-* [x] Integrated model & vectorizer
-* [x] CLI deployment instructions
+### 🏆 Most Liked Departments
+- Departments that consistently hosted high-rated events:
+  - 👨‍💻 **Computer Science (CS)**
+  - 📡 **Electronics and Communication (ECE)**
+  - 🎓 **Master of Business Administration (MBA)**
 
-✅ Power BI Report:
+---
 
-* [x] Interactive Visualizations
-* [x] Filters, slicers
-* [x] DAX formulas and KPI metrics
+### ❌ Common Feedback Issues
+- Extracted using **NLP keyword analysis**, word clouds, and frequency distribution:
+  - Lack of interaction
+  - Short or rushed event durations
+  - Technical glitches or presentation issues
+
+---
+
+### 🤖 Machine Learning Models
+- Models Developed:
+  - ✅ **Logistic Regression**
+  - ✅ **Random Forest Classifier**
+- **Input Features**:
+  - `TF-IDF` feature vectors from `Cleaned_Comments`
+- **Target Labels**:
+  - Derived from sentiment polarity score buckets (Positive/Neutral/Negative)
+- **Best Model**:
+  - Saved using `joblib` and deployed in the Streamlit app
+
+---
+
+### 📊 Power BI Dashboard
+- Developed with advanced **DAX measures** and **Power Query** transformations.
+- Interactive features:
+  - ✅ Dynamic filtering by Event Type, Department, and Sentiment
+  - ✅ Drill-through analysis by department
+  - ✅ KPI cards showing:
+    - Avg. Rating
+    - Positive/Negative Sentiment %
+    - Event Count
+  - ✅ Slicers for user-driven exploration
+  - ✅ Bar charts, donut charts, line charts for:
+    - Sentiment trends
+    - Participation volume
+    - Rating distribution
+
+---
+
+### 🧠 Correlation Analysis
+- **Positive Correlation** observed between:
+  - `Average_Score` and `Polarity`
+  - `Average_Score` and `Compound`
+  - `Average_Score` and `Percentage`
+- **Workshop events** showed the **strongest correlations**, indicating alignment between participant perception and actual sentiment scores.
+
+---
+
+### ⚙️ Power BI Formulas
+- **DAX Measures Used**:
+  ```DAX
+  Average Score = AVERAGE(Clean_Student_Satisfaction_Surveys[Average_Score])
+  Sentiment % Positive = 
+      DIVIDE(
+        CALCULATE(COUNTROWS(Clean_Student_Satisfaction_Surveys), Clean_Student_Satisfaction_Surveys[Sentiment] = "Positive"),
+        Clean_Student_Satisfaction_Surveys(Feedback)
+      )
+
 
 ---
 
@@ -500,7 +570,7 @@ in
 
 ## 📎 Author
 
-**👨‍💻 Goutham Kharvi**
+**👨‍💻 Gouthum Kharvi**
 Data Scientist | Python & NLP Enthusiast | Streamlit + Power BI Developer
 
 
