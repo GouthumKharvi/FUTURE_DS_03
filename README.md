@@ -4,6 +4,10 @@ College Event Feedback Analysis – Internship Project(Using NLP + ML + PowerBI)
 
 
 
+
+https://github.com/user-attachments/assets/0d63af60-c39d-447d-9b50-d9e82ee7cde1
+
+
 https://github.com/user-attachments/assets/cc45255d-0eaa-45ce-a716-55f8f5e2e425
 
 
