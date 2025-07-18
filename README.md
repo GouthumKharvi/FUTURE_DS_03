@@ -401,19 +401,78 @@ dump(tfidf, 'vectorizer.pkl')
 ### 🧠 `app.py`
 
 ```python
-import streamlit as st
-from joblib import load
+code = '''import streamlit as st
+import joblib
+import numpy as np
+import pandas as pd
 
-model = load('best_model.pkl')
-vectorizer = load('vectorizer.pkl')
+# Load model and vectorizer
+model = joblib.load("sentiment_rf_model.pkl")
+vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
-st.title("🎯 Student Feedback Sentiment Classifier")
+# Streamlit page settings
+st.set_page_config(
+    page_title="🎓 Student Sentiment Analyzer",
+    page_icon="💬",
+    layout="centered",
+    initial_sidebar_state="auto"
+)
 
-text_input = st.text_area("Enter feedback comment:")
-if st.button("Predict Sentiment"):
-    vec = vectorizer.transform([text_input])
-    prediction = model.predict(vec)[0]
-    st.success(f"Predicted Sentiment: **{prediction}**")
+# Sidebar Info
+with st.sidebar:
+    st.title("📘 About")
+    st.markdown(\"\"\"
+    This app analyzes **student feedback** and classifies the sentiment as:
+
+    - 🟢 Positive
+    - 🟡 Neutral
+    - 🔴 Negative
+
+    Built using **Streamlit**, **scikit-learn**, and **NLP (TF-IDF + RandomForest)**.
+    \"\"\")
+
+# Main Header
+st.markdown(
+    "<h1 style='text-align: center; color: #4CAF50;'>📊 Student Feedback Sentiment Analyzer</h1>",
+    unsafe_allow_html=True
+)
+st.write("")
+
+# Input Box
+user_input = st.text_area("✍️ Enter Student Comment Below:")
+
+# Predict Button
+if st.button("🔍 Predict Sentiment"):
+    if user_input.strip() == "":
+        st.warning("⚠️ Please enter a comment before predicting.")
+    else:
+        input_vector = vectorizer.transform([user_input])
+        pred = model.predict(input_vector)[0]
+
+        sentiment_map = {0: "🔴 Negative", 1: "🟡 Neutral", 2: "🟢 Positive"}
+        sentiment_label = sentiment_map.get(pred, str(pred))
+
+        # Result Card
+        st.markdown("---")
+        st.markdown(f"<h3 style='text-align: center;'>Prediction:</h3>", unsafe_allow_html=True)
+        st.markdown(
+            f"<h2 style='text-align: center; color: #2E8B57;'>{sentiment_label}</h2>",
+            unsafe_allow_html=True
+        )
+        st.markdown("---")
+        st.success("✅ Sentiment analysis complete.")
+
+# Footer
+st.markdown(
+    "<hr><div style='text-align: center;'>Made with ❤️ by Gouthum • Future Interns Task 3</div>",
+    unsafe_allow_html=True
+)
+'''
+
+# Save to a Python file in Colab
+with open("app.py", "w") as f:
+    f.write(code)
+
 ```
 
 ### ▶️ How to Run the Streamlit App using Anaconda CLI:
@@ -494,19 +553,40 @@ in
 
 ---
 
-### 🏆 Most Liked Departments
-- Departments that consistently hosted high-rated events:
-  - 👨‍💻 **Computer Science (CS)**
-  - 📡 **Electronics and Communication (ECE)**
-  - 🎓 **Master of Business Administration (MBA)**
+### Most-Liked Departments Insights:
+
+Top-performing departments in terms of feedback are:
+
+Information Technology (4.35),
+
+Banking and Insurance (4.35), and
+
+Arts (4.34), which also has the highest compound sentiment (0.426).
+
+Departments with relatively low engagement include:
+
+Data Science, with the lowest average score (3.05) and lowest percentage (61.00%).
+
+This indicates a gap in satisfaction and potentially lower engagement or alignment of events with the Data Science department's expectations.
+
+Conclusion:
+
+Departments like Information Technology, Banking and Insurance, and Arts show the highest satisfaction levels, while departments like Data Science, Physics, and Food show the lowest feedback scores, indicating a need to reevaluate the event relevance or execution for those departments.
 
 ---
 
 ### ❌ Common Feedback Issues
-- Extracted using **NLP keyword analysis**, word clouds, and frequency distribution:
-  - Lack of interaction
-  - Short or rushed event durations
-  - Technical glitches or presentation issues
+Most Common Complaints:
+average (16 times)
+satisfied (13 times)
+teaching (13 times)
+method (13 times)
+expected (9 times)
+felt (9 times)
+boring (9 times)
+found (5 times)
+session (5 times)
+confusing (5 times)
 
 ---
 
@@ -552,12 +632,57 @@ in
 ### ⚙️ Power BI Formulas
 - **DAX Measures Used**:
   ```DAX
-  Average Score = AVERAGE(Clean_Student_Satisfaction_Surveys[Average_Score])
-  Sentiment % Positive = 
-      DIVIDE(
-        CALCULATE(COUNTROWS(Clean_Student_Satisfaction_Surveys), Clean_Student_Satisfaction_Surveys[Sentiment] = "Positive"),
-        Clean_Student_Satisfaction_Surveys(Feedback)
-      )
+  ## 📊 Power BI DAX Formulas Used
+
+All the DAX formulas listed below were implemented in the `Cleaned_Student_Satisfaction_Surveys` table to build dynamic visuals, KPIs, and insights for the student satisfaction survey analysis.
+
+---
+
+### ✅ `Average Rating (2 Decimal Precision)`
+
+```DAX
+Average Rating = 
+ROUND(
+    AVERAGE(Cleaned_Student_Satisfaction_Surveys[Total Rating]),
+    2
+)
+## 📊 Power BI DAX Formulas Used
+
+All the DAX formulas listed below were implemented in the `Cleaned_Student_Satisfaction_Surveys` table to build dynamic visuals, KPIs, and insights for the student satisfaction survey analysis.
+
+---
+---
+
+### ✅ `Positive Feedback Count`
+
+```DAX
+Positive Feedback = 
+CALCULATE(
+    COUNTROWS(Cleaned_Student_Satisfaction_Surveys),
+    Cleaned_Student_Satisfaction_Surveys[Sentiment_Label] = "Positive"
+)
+
+---
+
+---
+
+Negative Feedback = 
+CALCULATE(
+    COUNTROWS(Cleaned_Student_Satisfaction_Surveys),
+    Cleaned_Student_Satisfaction_Surveys[Sentiment_Label] = "Negative"
+)
+
+----
+
+---
+
+Neutral Feedback = 
+CALCULATE(
+    COUNTROWS(Cleaned_Student_Satisfaction_Surveys),
+    Cleaned_Student_Satisfaction_Surveys[Sentiment_Label] = "Neutral"
+)
+
+---
 
 
 ---
